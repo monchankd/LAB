@@ -1,0 +1,6 @@
+gui\Main.class
+manager\Manager.class
+model\SalaryHistory.class
+gui\Menu.class
+model\Worker.class
+manager\Validation.class
