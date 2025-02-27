@@ -4,6 +4,7 @@
  */
 package manager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,7 +63,8 @@ public class Manager {
             }
         }
         o.setSalary(update);
-        shList.add(new SalaryHistory(id, o.getName(), o.getAge(), o.getSalary(), status, getCurrentDate()));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        shList.add(new SalaryHistory(id, o.getName(), o.getAge(), o.getSalary(), status, dateFormat.format(getCurrentDate())));
     }
 
     public Date getCurrentDate() {

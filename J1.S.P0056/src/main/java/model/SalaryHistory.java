@@ -16,12 +16,12 @@ public class SalaryHistory {
     private int age;
     private double updateSalary;
     private String status;
-    private Date date;
+    private String date;
 
     public SalaryHistory() {
     }
 
-    public SalaryHistory(String id, String name, int age, double updateSalary, String status, Date date) {
+    public SalaryHistory(String id, String name, int age, double updateSalary, String status, String date) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -70,11 +70,11 @@ public class SalaryHistory {
         this.status = status;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
