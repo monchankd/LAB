@@ -79,6 +79,8 @@ public class Dictionary {
             System.out.println("Not found");
             return;
         }
+        
+        dict.remove(eng);
         saveData();
         System.out.println("DELETE SUCCESSFUL");
     }
