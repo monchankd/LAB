@@ -24,24 +24,23 @@ public class Menu {
     }
 
     public static void display() {
-        Manager m = new Manager();
         while (true) {
             int choice = menu();
             switch (choice) {
                 case 1:
-                    m.addWorker();
+                    Manager.addWorker();
                     break;
                 case 2:
-                    m.updateSalary(1);
+                    Manager.updateSalary(1);
                     break;
                 case 3:
-                    m.updateSalary(2);
+                    Manager.updateSalary(2);
                     break;
                 case 4:
                     System.out.printf("%5s | %5s | %5s | %5s | %5s | %5s", "Code", "Name", "Age",
                             "Salary", "Status", "Date");
                     System.out.println();
-                    m.getInformation();
+                    Manager.getInformation();
                     break;
                 case 5:
                     return;

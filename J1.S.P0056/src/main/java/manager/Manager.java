@@ -20,16 +20,11 @@ import model.Worker;
 public class Manager {
 
     private static final Scanner sc = new Scanner(System.in);
-    private List<Worker> wList;
-    private List<SalaryHistory> shList;
-    final double epsi = 0.00001;
+    private static List<Worker> wList= new ArrayList<>();
+    private static List<SalaryHistory> shList= new ArrayList<>();
+    static final double epsi = 0.00001;
 
-    public Manager() {
-        wList = new ArrayList<>();
-        shList = new ArrayList<>();
-    }
-
-    public void addWorker() {
+    public static void addWorker() {
         String id, name, workLocation;
         int age;
         double salary;
@@ -47,7 +42,7 @@ public class Manager {
 
     }
 
-    public void updateSalary(int mode) {
+    public static void updateSalary(int mode) {
         String id = Validation.getCode("Enter worker id to be updated: ", "ID must exited and not null", wList, 2);
         double money = Validation.checkDouble("Amount of money", epsi, Double.MAX_VALUE);
         Worker o = Validation.getWorker(id, wList);
@@ -67,20 +62,20 @@ public class Manager {
         shList.add(new SalaryHistory(id, o.getName(), o.getAge(), o.getSalary(), status, dateFormat.format(getCurrentDate())));
     }
 
-    public Date getCurrentDate() {
+    public static Date getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         return calendar.getTime();
     }
 
-    public void getInformation() {
+    public static void getInformation() {
         display(shList);
     }
 
-    public void displayAll() {
+    public static void displayAll() {
         display(wList);
     }
 
-    public void display(List list) {
+    public static void display(List list) {
         for (Object object : list) {
             System.out.println(object);
         }
