@@ -45,27 +45,27 @@ public class Validation {
             }
         }
     }
-
-    public static String getCode(String mess, String err, List<Worker> wList, int mode) {
-        while (true) {
-            System.out.println(mess);
-            String input = sc.nextLine();
-            if (!input.isEmpty()) {
-                if ((mode == 1 && getWorker(input, wList) == null)
-                        || (mode == 2 && getWorker(input, wList) != null)) {
-                    return input;
-                }
-            }
-            System.out.println(err);
-        }
-    }
-
-    public static Worker getWorker(String id, List<Worker> wList) {
-        for (Worker worker : wList) {
-            if (worker.getId().equals(id)) {
-                return worker;
-            }
-        }
-        return null;
-    }
+//
+//    public static String getCode(String mess, String err, List<Worker> wList, int mode) {
+//        while (true) {
+//            System.out.println(mess);
+//            String input = sc.nextLine();
+//            if (!input.isEmpty()) {
+//                if ((mode == 1 && getWorker(input, wList) == null)
+//                        || (mode == 2 && getWorker(input, wList) != null)) {
+//                    return input;
+//                }
+//            }
+//            System.out.println(err);
+//        }
+//    }
+//
+//    public static Worker getWorker(String id, List<Worker> wList) {
+//        for (Worker worker : wList) {
+//            if (worker.getId().equals(id)) {
+//                return worker;
+//            }
+//        }
+//        return null;
+//    }
 }

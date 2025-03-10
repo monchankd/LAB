@@ -20,59 +20,41 @@ import model.Worker;
 public class Manager {
 
     private static final Scanner sc = new Scanner(System.in);
-    private static List<Worker> wList= new ArrayList<>();
-    private static List<SalaryHistory> shList= new ArrayList<>();
-    static final double epsi = 0.00001;
+    private static List<Worker> wList = new ArrayList<>();
+    private static List<SalaryHistory> shList = new ArrayList<>();
 
-    public static void addWorker() {
-        String id, name, workLocation;
-        int age;
-        double salary;
-        id = Validation.getCode("Enter worker id", "Id should be unique and not null", wList, 1);
-        System.out.println("Enter worker name: ");
-        name = sc.nextLine();
-
-        age = Validation.checkInt("Enter worker age: ", 18, 50);
-        salary = Validation.checkDouble("Enter worker salary: ", epsi, Double.MAX_VALUE);
-
-        System.out.println("Enter work location: ");
-        workLocation = sc.nextLine();
-
-        wList.add(new Worker(id, name, age, salary, workLocation));
-
-    }
-
-    public static void updateSalary(int mode) {
-        String id = Validation.getCode("Enter worker id to be updated: ", "ID must exited and not null", wList, 2);
-        double money = Validation.checkDouble("Amount of money", epsi, Double.MAX_VALUE);
-        Worker o = Validation.getWorker(id, wList);
-        double update = 0;
-        String status = "";
-        if (mode == 1) {
-            update = o.getSalary() + money;
-            status = "UP";
-        } else if (mode == 2) {
-            if (o.getSalary() > money) {
-                update = o.getSalary() - money;
-                status = "DOWN";
+    public static void addWorker(Worker worker) {
+        for (Worker w : wList) {
+            if (w.getId().equals(worker.getId())) {
+                System.err.println("Code have been exist");
+                return;
             }
         }
-        o.setSalary(update);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        shList.add(new SalaryHistory(id, o.getName(), o.getAge(), o.getSalary(), status, dateFormat.format(getCurrentDate())));
+        wList.add(worker);
+        System.out.println("Worker added successfully!");
     }
 
-    public static Date getCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.getTime();
+    public static void SalaryUpdate(String status, String code, double money) {
+        for (Worker w : wList) {
+            if (w.getId().equals(code)) {
+                if (status.equals("UP")) {
+                    w.setSalary(w.getSalary() + money);
+                } else {
+                    if (money >= w.getSalary()) {
+                        w.setSalary(0);
+                    } else {
+                        w.setSalary(w.getSalary() - money);
+                    }
+                }
+                shList.add(new SalaryHistory(w.getId(), w.getName(), w.getAge(), w.getSalary(), status));
+                return;
+            }
+        }
+        System.err.println("Id not been exist");
     }
 
     public static void getInformation() {
         display(shList);
-    }
-
-    public static void displayAll() {
-        display(wList);
     }
 
     public static void display(List list) {

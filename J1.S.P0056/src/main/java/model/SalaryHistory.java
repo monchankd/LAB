@@ -4,6 +4,9 @@
  */
 package model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author admin
@@ -19,13 +22,13 @@ public class SalaryHistory {
     public SalaryHistory() {
     }
 
-    public SalaryHistory(String id, String name, int age, double updateSalary, String status, String date) {
+    public SalaryHistory(String id, String name, int age, double updateSalary, String status) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.updateSalary = updateSalary;
         this.status = status;
-        this.date = date;
+        this.date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
     }
 
     public String getId() {

@@ -4,8 +4,10 @@
  */
 package gui;
 
+import java.util.Scanner;
 import manager.Manager;
 import manager.Validation;
+import model.Worker;
 
 /**
  *
@@ -25,16 +27,31 @@ public class Menu {
 
     public static void display() {
         while (true) {
+            Scanner sc = new Scanner(System.in);
             int choice = menu();
             switch (choice) {
                 case 1:
-                    Manager.addWorker();
+                    System.out.println("Enter id: ");
+                    String id = sc.nextLine();
+                    System.out.println("Enter Name: ");
+                    String name = sc.nextLine();
+                    int age = Validation.checkInt("Enter age:",18,50);
+                    double salary = Validation.checkDouble("Enter salary: ",0,Double.MAX_VALUE);
+                    System.out.println("Enter work location:");
+                    String workLocatin = sc.nextLine();
+                    Manager.addWorker(new Worker(id, name, age, salary,workLocatin));
                     break;
                 case 2:
-                    Manager.updateSalary(1);
+                    System.out.println("Enter id: ");
+                    String upid = sc.nextLine();
+                    double upmoney = Validation.checkDouble("Enter Amount: ",0,Double.MAX_VALUE);
+                    Manager.SalaryUpdate("UP", upid, upmoney);
                     break;
                 case 3:
-                    Manager.updateSalary(2);
+                    System.out.println("Enter id: ");
+                    String downid = sc.nextLine();
+                    double downmoney = Validation.checkDouble("Enter Amount", 0, Double.MAX_VALUE);
+                    Manager.SalaryUpdate("DOWN", downid, downmoney);
                     break;
                 case 4:
                     System.out.printf("%5s | %5s | %5s | %5s | %5s | %5s", "Code", "Name", "Age",
