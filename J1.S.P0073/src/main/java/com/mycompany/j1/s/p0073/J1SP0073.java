@@ -19,7 +19,6 @@ public class J1SP0073 {
 
     private static List<Expense> expenseList = new ArrayList<>();
     private static int currentId = 1;
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         while (true) {
@@ -28,8 +27,7 @@ public class J1SP0073 {
             System.out.println("2. Display all expenses");
             System.out.println("3. Remove an expense");
             System.out.println("4. Exit");
-            System.out.print("Choose an option: ");
-            int choice = getValidInteger();
+            int choice = Validation.checkInt("Choose an option: ", 1, 4);
 
             switch (choice) {
                 case 1:
@@ -39,7 +37,8 @@ public class J1SP0073 {
                     displayAll();
                     break;
                 case 3:
-                    deleteExpense();
+                    int id = Validation.checkInt("Enter expense ID to delete: ", 1, Integer.MAX_VALUE);
+                    deleteExpense(id);
                     break;
                 case 4:
                     System.out.println("Exiting program.");
@@ -51,12 +50,9 @@ public class J1SP0073 {
     }
 
     public static void addExpense() {
-        System.out.print("Enter date (dd/MM/yyyy): ");
-        Date date = getValidDate();
-        System.out.print("Enter amount: ");
-        double amount = getValidDouble();
-        System.out.print("Enter content: ");
-        String content = scanner.nextLine();
+        Date date = Validation.checkDate("Enter date (dd/MM/yyyy): ");
+        double amount = Validation.checkDouble("Enter amount: ", 0, Double.MAX_VALUE);
+        String content = Validation.checkString("Enter content: ");
         expenseList.add(new Expense(currentId++, date, amount, content));
         System.out.println("Expense added successfully!");
     }
@@ -73,14 +69,23 @@ public class J1SP0073 {
         System.out.printf("Total: %.2f\n", total);
     }
 
-    public static void deleteExpense() {
-        System.out.print("Enter expense ID to delete: ");
-        int id = getValidInteger();
-        if (!expenseExists(id)) {
-            System.out.println("Delete an expense fail");
+    public static void deleteExpense(int id) {
+        if (expenseList.isEmpty()) {
+            System.out.println("No expenses available to delete. Exiting.");
+            return; 
         }
-        expenseList.remove(id);
-        System.out.println("Delete an expense successful");
+        while (!expenseExists(id)) {
+            System.out.println("Delete an expense fail");
+            id = Validation.checkInt("Enter expense ID to delete: ", 1, Integer.MAX_VALUE);
+        }
+
+        for (int i = 0; i < expenseList.size(); i++) {
+            if (expenseList.get(i).getId() == id) {
+                expenseList.remove(i);
+                System.out.println("Delete an expense successful");
+                return;
+            }
+        }
     }
 
     private static boolean expenseExists(int id) {
@@ -92,44 +97,4 @@ public class J1SP0073 {
         return false;
     }
 
-    private static int getValidInteger() {
-        while (true) {
-            try {
-                int num = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-                return num;
-            } catch (InputMismatchException e) {
-                System.out.print("Invalid input. Please enter a valid integer: ");
-                scanner.nextLine(); // Clear buffer
-            }
-        }
-    }
-
-    private static double getValidDouble() {
-        while (true) {
-            try {
-                double num = scanner.nextDouble();
-                scanner.nextLine(); // Consume newline
-                if (num < 0) {
-                    System.out.print("Amount cannot be negative. Enter again: ");
-                } else {
-                    return num;
-                }
-            } catch (InputMismatchException e) {
-                System.out.print("Invalid input. Please enter a valid amount: ");
-                scanner.nextLine(); // Clear buffer
-            }
-        }
-    }
-
-    private static Date getValidDate() {
-        while (true) {
-            try {
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                return formatter.parse(scanner.nextLine());
-            } catch (ParseException e) {
-                System.out.print("Invalid date format. Please use dd/MM/yyyy: ");
-            }
-        }
-    }
 }
