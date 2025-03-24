@@ -14,7 +14,7 @@ import java.util.List;
 public class Manager {
 
     public static boolean addDoctor(List<Doctor> dList, Doctor doctor) {
-        while (doctorExists(dList, doctor.getCode())) {
+        while (doctorExists(dList, doctor.getCode()) != null) {
             System.out.println("Code exist");
             doctor.setCode(Validation.checkString("Enter other ID to add: "));
         }
@@ -22,13 +22,13 @@ public class Manager {
         return true;
     }
 
-    public static boolean doctorExists(List<Doctor> dList, String id) {
+    public static Doctor doctorExists(List<Doctor> dList, String id) {
         for (Doctor d : dList) {
             if (d.getCode().equals(id)) {
-                return true;
+                return d;
             }
         }
-        return false;
+        return null;
     }
 
     public static boolean updateDoctor(List<Doctor> dList, String codeUp, String newName, String newspec, int newavail) {
@@ -36,17 +36,20 @@ public class Manager {
 //            System.out.println("No list");
 //            return false;
 //        }
-        for (Doctor d : dList) {
-            if (d.getCode().equals(codeUp)) {
-                d.setName(newName.isEmpty() ? d.getName() : newName);
-                d.setSpecialization(newspec.isEmpty() ? d.getSpecialization() : newspec);
-                d.setAvailability(newavail == -1 ? d.getAvailability() : newavail);
-                System.out.println("Updated done");
-                return true;
+        Doctor d = null;
+        while (d == null) {
+            d = doctorExists(dList, codeUp);
+            if (d == null) {
+                System.out.println("Code not exist");
+                codeUp = Validation.checkString("Enter code: ");
             }
         }
-        System.out.println("Id not exist");
-        return false;
+        d.setName(newName.isEmpty() ? d.getName() : newName);
+        d.setSpecialization(newspec.isEmpty() ? d.getSpecialization() : newspec);
+        d.setAvailability(newavail == -1 ? d.getAvailability() : newavail);
+        System.out.println("Updated done");
+        return true;
+
     }
 
     public static boolean deleteDoctor(List<Doctor> dList, String code) {
